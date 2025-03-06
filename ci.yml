@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: ci code base
 
 on:
   push:
@@ -17,32 +17,32 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/ci@v3
         with:
           node-version: '20'
 
       - name: Install Dependencies
-        run: npm install
+         run: npm install
 
       - name: Run Tests
-        run: npm test
+         run: npm test
 
       - name: Build Application
-        run: npm run build
+         run: npm run build
 
       - name: Notify on Success
-        if: success()
-        run: echo "Workflow completed successfully!"
+          if: success()
+         run: echo "Workflow completed successfully!"
 
       - name: Notify on Failure
-        if: failure()
-        run: echo "Workflow failed!"
+          if: failure()
+         run: echo "Workflow failed!"
 
   notify:
-    needs: build
+      needs: build
     runs-on: ubuntu-latest
-    steps:
-      - name: Send Notification
+      steps:
+    - name: Send Notification
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
