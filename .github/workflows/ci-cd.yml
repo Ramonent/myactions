@@ -1,20 +1,17 @@
-name: Python CI/CD Pipeline
-'on':
-  push:
-    branches:
-      - main
-  pull_request: null
+name: ci-cd
+
+on: push
+
 jobs:
-  build:
+   ci:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Repository
+      - name: Checkout code
         uses: actions/checkout@v2
-      - name: Set up Python
-        uses: actions/setup-python@v3
-        with:
-          python-version: '3.10'
-      - name: Install Dependencies
-        run: pip install -r requirements.txt
-      - name: Run Tests
-        run: python -m unittest discover
+
+      - name: Run CI
+        uses: github/ci@v4
+        env:
+          DEFAULT_BRANCH: main
+          GITHUB_Token: ${{ secrets.GITHUB_TOKEN }
