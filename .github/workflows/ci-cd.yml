@@ -1,27 +1,26 @@
-name: CI-CD
+name: Python CI/CD Pipeline
 
-'on':
+on: 
   push:
-  
     branches:
       - main
-    pull_request: null
-    
- jobs:
+  pull_request:
+
+jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-        
-          node-version: '18'
+          python-version: '3.10'
+
       - name: Install Dependencies
-        run: npm install
+        run: pip install -r requirements.txt
+
       - name: Run Tests
-        run: npm test
-        
-      - name: Build Project
-        run: npm run build
+        run: python -m unittest discover
